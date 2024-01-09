@@ -7,11 +7,11 @@ start_time = time.time()
 def calculate_partial_derivatives(x, y, a, b, c):
     m = len(x)
     h = a *x **2 + b * x + c
-    error = (1/m)*(h - y)                  # J = 1/2m * np.sum((h - y)**2) 
+    error = (2/m)*(h - y)                  # J = 1/2m * np.sum((h - y)**2) 
 
-    partial_derivative_a = (1 / m) * np.sum(error * x**2)
-    partial_derivative_b = (1 / m) * np.sum(error * x)
-    partial_derivative_c = (1 / m) * np.sum(error)
+    partial_derivative_a = (2 / m) * np.sum(error * x**2)
+    partial_derivative_b = (2 / m) * np.sum(error * x)
+    partial_derivative_c = (2 / m) * np.sum(error)
 
     return partial_derivative_a, partial_derivative_b, partial_derivative_c
 
