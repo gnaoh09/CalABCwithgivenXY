@@ -6,12 +6,12 @@ start_time = time.time()
 
 def calculate_partial_derivatives(x, y, a, b, c):
     m = len(x)
-    h = a *x **2 + b * x + c
-    error = (2/m)*(h - y)                  # J = 1/2m * np.sum((h - y)**2) 
+    h = np.log(a *x **2 + b * x + c)
+    error = (h - y)                  # J = 1/2m * np.sum((h - y)**2) 
 
-    partial_derivative_a = (2 / m) * np.sum(error * x**2)
-    partial_derivative_b = (2 / m) * np.sum(error * x)
-    partial_derivative_c = (2 / m) * np.sum(error)
+    partial_derivative_a = np.mean((1 / m) * (error * 2 * x ** 2 / (a * x ** 2 + b * x+c)))
+    partial_derivative_b = np.mean((1 / m) * (error * 2 * x  / (a * x ** 2 + b * x+c)))
+    partial_derivative_c = np.mean((1 / m) * (error * 2  / (a * x ** 2 + b * x+c)))
 
     return partial_derivative_a, partial_derivative_b, partial_derivative_c
 
@@ -33,14 +33,15 @@ def gradient_descent(x, y, learning_rate, num_iterations):
 noise = np.array([-0.06461788, -0.05086664, -0.11558887 ,-0.14132715,  0.06804226,  0.01242857,
  -0.04097562 ,-0.008727 ,  -0.13992025, -0.01459187]) 
 x0= np.array([1, -1, 2, -2,3, -3,4, -4, 5, -5])
-y = np.array([ 6 , 2, 11  ,3 ,18 , 6, 27 ,11 ,38 ,18])
+y = np.array([1.79175947, 0.69314718, 2.39789527 ,1.09861229, 2.89037176, 1.79175947,
+ 3.29583687, 2.39789527 ,3.63758616, 2.89037176])
 
 # Add noise to the observed y values
 x = x0 + noise
 
 # Perform gradient descent
-learning_rate = 0.0001
-num_iterations = 10000
+learning_rate = 0.001
+num_iterations = 1000000
 a_estimated, b_estimated, c_estimated = gradient_descent(x, y, learning_rate, num_iterations)
 
 print("Estimated values:")
